@@ -12,6 +12,10 @@ class DatasetOperator(metaclass=ABCMeta):
     @abstractmethod
     def get_corename(self):
         pass
+    
+    @abstractmethod
+    def initialize(self):
+        pass
 
     def get_correct_ids(self, ginfo):
         pass

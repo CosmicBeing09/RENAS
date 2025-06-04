@@ -11,9 +11,11 @@ class ManualDatasetOperator(DatasetOperator):
     def __init__(self):
         self.key_to_id = {}
         self.count = 0
+        self.already_recommend = set()
+        self.used_corename = set()
 
-    def print_count(self, num=1):
-        print(f"The number of corenamings = {int(self.count)}")
+    def print_count(self):
+        print(f"The number of corenaming sets = {len(self.used_corename)}")
 
     def setArgument(self):
         parser = argparse.ArgumentParser()
@@ -51,20 +53,29 @@ class ManualDatasetOperator(DatasetOperator):
 
     def get_correct_ids(self, ginfo):
         correct_keys = []
+        corename_candidate = set()
         if ginfo["commit"] not in self.corename_group:
             return []
-        for keys in self.corename_group[ginfo["commit"]].values():
+        for num, keys in self.corename_group[ginfo["commit"]].items():
             for key in keys:
                 if key == self.get_key(ginfo):
                     correct_keys += keys
+                    corename_candidate.add(ginfo["commit"] + ":" + str(num))
 
         correct_ids = set()
         for key in correct_keys:
             if key not in self.key_to_id:
                 continue
             correct_ids.add(self.key_to_id[key])
+        if self.get_key(ginfo) in self.already_recommend:
+            return set()
+        if "" in correct_ids:
+            correct_ids.remove("")
         if len(correct_ids) >= 1:
             correct_ids.remove(ginfo["id"])
+        if len(correct_ids) >= 1:
+            self.used_corename = self.used_corename.union(corename_candidate)
+            self.already_recommend.add(self.get_key(ginfo))
         return correct_ids
 
     def set_corename_list(self, goldset):
@@ -110,3 +121,7 @@ class ManualDatasetOperator(DatasetOperator):
 
     def get_corename(self):
         return self.corename_group
+
+    def initialize(self):
+        self.already_recommend = set()
+        self.used_corename = set()
