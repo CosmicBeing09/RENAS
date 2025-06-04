@@ -5,8 +5,8 @@ class IdentifiedDatasetOperator(DatasetOperator):
     def __init__(self):
         self.count = 0
 
-    def print_count(self, num=1):
-        print(f"The number of corenamings = {int(self.count/num)}")
+    def print_count(self):
+        print(f"The number of corenaming sets = {self.count}")
 
     def set_corename_list(self, goldset):
         corename_sets = {}
@@ -47,3 +47,7 @@ class IdentifiedDatasetOperator(DatasetOperator):
 
     def get_corename(self):
         return self.corename
+    
+    def initialize(self):
+        self.count = 0
+        return

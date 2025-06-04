@@ -45,6 +45,7 @@ class RecommendDictOperator:
 
         self.now_commit = self.commit_list.popleft()
         self.now_goldset_num = 0
+        self.correct_database.initialize()
         self.correct_database.set_corename_list(
             self.__recommend_json[self.now_commit]["goldset"]
         )
@@ -58,7 +59,7 @@ class RecommendDictOperator:
         if len(self.__recommend_json[commit]["goldset"]) == goldset_num:
             if not self.set_next_commit():
                 if self.alpha == 1.0:
-                    self.correct_database.print_count(21)
+                    self.correct_database.print_count()
                 return {}, []
             return self.get_next_recommend()
         if self.__recommend_json[commit]["goldset"][goldset_num]["id"] == "":
