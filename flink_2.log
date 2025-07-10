@@ -1,0 +1,9 @@
+[2025-06-19 15:58:30,249] root -- INFO : rq1: projects/flink is evaluating
+[2025-06-19 15:59:03,065] renas.evaluation.approach_performance -- INFO : none: precision = 0.15776274278735752,             recall = 0.9673879954999669, fscore = 0.23033110977856475
+[2025-06-19 15:59:03,066] renas.evaluation.approach_performance -- INFO : relation: precision = 0.43326429894105944,             recall = 0.35731363729719595, fscore = 0.11541708090405649
+[2025-06-19 15:59:03,066] renas.evaluation.approach_performance -- INFO : normalizeRelation: precision = 0.41978881228173,             recall = 0.36368104836978865, fscore = 0.11473138662145368
+[2025-06-19 15:59:03,067] renas.evaluation.approach_performance -- INFO : renas: precision = 0.5657298920801628,             recall = 0.4517895652892282, fscore = 0.26360937820480757
+[2025-06-19 15:59:03,076] root -- INFO : rq2: projects/flink is evaluating
+The number of renaming = 657
+The number of renamings = 657
+The number of corenaming sets = 81

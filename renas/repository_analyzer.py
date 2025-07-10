@@ -25,6 +25,10 @@ def set_argument():
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--commit-file", 
+        help="optional file containing commit hashes to analyze (one per line). File should be in the mounted directory."
+    )
     args = parser.parse_args()
     return args
 
@@ -32,7 +36,7 @@ def set_argument():
 def main(root, args):
     rename_path = os.path.join(root, "rename.json")
     if not os.path.isfile(rename_path) or args.f:
-        refactoring_dict = refactoringminer.main(root)
+        refactoring_dict = refactoringminer.main(root, args.commit_file)
         refactoring_data = pd.DataFrame.from_records(refactoring_dict["commits"])
         rename_data = rename_extractor.main(root, refactoring_data)
         dump(root, rename_data)

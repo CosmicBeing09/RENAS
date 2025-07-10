@@ -4,7 +4,7 @@ set -e
 
 for line in  `cat renas/projects.txt`
 do
-python3 -m renas.repository_analyzer "projects/${line}"
+python3 -m renas.repository_analyzer "projects/${line}" --commit-file "projects/${line}/commits.txt"
 python3 -m renas.recommendation "projects/${line}"
 done
 

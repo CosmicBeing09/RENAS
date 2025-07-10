@@ -20,6 +20,10 @@ def set_argument():
     parser.add_argument(
         "source", help="set directory containing repositories to be analyzed"
     )
+    parser.add_argument(
+        "--commit-file", 
+        help="optional file containing commit hashes to analyze (one per line). File should be in the mounted directory."
+    )
     args = parser.parse_args()
     return args
 
@@ -36,15 +40,39 @@ def set_logger(level):
     return root_logger
 
 
-def set_gitlog(path):
+def set_gitlog(path, commit_file=None):
     repo_path = os.path.join(path, "repo")
     commits = set()
-    cp = subprocess.run(f"cd {repo_path}; git log", shell=True, stdout=subprocess.PIPE)
-    git_log = cp.stdout.decode("utf-8", "ignore")
-    git_info = GIT_REGULAR.findall(git_log)
-    for info in git_info:
-        commit = info[0]
-        commits.add(commit)
+    
+    if commit_file:
+        # Read commits from a file
+        commits = _set_gitlog_from_file(commit_file)
+    else:
+        # Read all commits from git log (original behavior)
+        cp = subprocess.run(f"cd {repo_path}; git log", shell=True, stdout=subprocess.PIPE)
+        git_log = cp.stdout.decode("utf-8", "ignore")
+        git_info = GIT_REGULAR.findall(git_log)
+        for info in git_info:
+            commit = info[0]
+            commits.add(commit)
+    
+    return commits
+
+def _set_gitlog_from_file(commit_file_path):
+    """Read commits from a file containing commit hashes (one per line)"""
+    commits = set()
+    try:
+        with open(commit_file_path, 'r') as f:
+            for line in f:
+                commit = line.strip()
+                if commit:  # Skip empty lines
+                    commits.add(commit)
+        _logger.info(f"Loaded {len(commits)} commits from {commit_file_path}")
+    except FileNotFoundError:
+        _logger.error(f"Commit file not found: {commit_file_path}")
+    except Exception as e:
+        _logger.error(f"Error reading commit file: {e}")
+    
     return commits
 
 
@@ -71,9 +99,9 @@ def set_repository_path(root):
     return repo_path
 
 
-def main(root):
+def main(root, commit_file=None):
     set_logger(INFO)
-    commits = set_gitlog(root)
+    commits = set_gitlog(root, commit_file)
     commit_length = len(commits)
     repo_path = set_repository_path(root)
     refactoring_dict = {"commits": []}
@@ -92,6 +120,6 @@ def main(root):
 if __name__ == "__main__":
     args = set_argument()
     root = pathlib.Path(args.source)
-    refactoring_dict = main(root)
+    refactoring_dict = main(root, args.commit_file)
     with open(root.joinpath("result.json"), "w") as rp:
         simplejson.dump(refactoring_dict, rp, indent=4, ignore_nan=True)
