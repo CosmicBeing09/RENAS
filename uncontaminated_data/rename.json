@@ -1,0 +1,137 @@
+[
+    {
+        "type": "Rename Class",
+        "commit": "0608304602608ae1e54abe3af8b47968674b7c69",
+        "oldname": "RawReferenceSnippet",
+        "newname": "PeerReferenceSnippet",
+        "typeOfIdentifier": "ClassName",
+        "line": 1394,
+        "files": "sdk\/src\/org.graalvm.nativebridge.processor\/src\/org\/graalvm\/nativebridge\/processor\/HotSpotToNativeServiceGenerator.java"
+    },
+    {
+        "type": "Rename Parameter",
+        "commit": "df17c95ce053497accba0253335a5089eb82b65d",
+        "oldname": "caseInsensitive",
+        "newname": "nameMatchingMode",
+        "typeOfIdentifier": "ParameterName",
+        "line": 136,
+        "files": "regex\/src\/com.oracle.truffle.regex\/src\/com\/oracle\/truffle\/regex\/charset\/UnicodePropertyData.java"
+    },
+    {
+        "type": "Rename Method",
+        "commit": "ea03f7344da440df2650c1dc4b7d534492cc1b31",
+        "oldname": "getTotalSpace",
+        "newname": "getFileStoreTotalSpace",
+        "typeOfIdentifier": "MethodName",
+        "line": 438,
+        "files": "sdk\/src\/org.graalvm.polyglot\/src\/org\/graalvm\/polyglot\/io\/FileSystem.java"
+    },
+    {
+        "type": "Rename Method",
+        "commit": "ea03f7344da440df2650c1dc4b7d534492cc1b31",
+        "oldname": "getUnallocatedSpace",
+        "newname": "getFileStoreUnallocatedSpace",
+        "typeOfIdentifier": "MethodName",
+        "line": 454,
+        "files": "sdk\/src\/org.graalvm.polyglot\/src\/org\/graalvm\/polyglot\/io\/FileSystem.java"
+    },
+    {
+        "type": "Rename Method",
+        "commit": "ea03f7344da440df2650c1dc4b7d534492cc1b31",
+        "oldname": "getUsableSpace",
+        "newname": "getFileStoreUsableSpace",
+        "typeOfIdentifier": "MethodName",
+        "line": 474,
+        "files": "sdk\/src\/org.graalvm.polyglot\/src\/org\/graalvm\/polyglot\/io\/FileSystem.java"
+    },
+    {
+        "type": "Rename Attribute",
+        "commit": "3c28d851dede6d15ab07fde639bc0bfb91b52ea8",
+        "oldname": "pointer",
+        "newname": "word",
+        "typeOfIdentifier": "FieldName",
+        "line": 39,
+        "files": "substratevm\/src\/com.oracle.svm.hosted\/src\/com\/oracle\/svm\/hosted\/meta\/RelocatableConstant.java"
+    },
+    {
+        "type": "Rename Method",
+        "commit": "f730ca330b8bea1dbfb2992921b5db9e17e8dcba",
+        "oldname": "getObjectStartOffset",
+        "newname": "setObjectStartOffsetOfUnalignedChunk",
+        "typeOfIdentifier": "MethodName",
+        "line": 97,
+        "files": "substratevm\/src\/com.oracle.svm.core.genscavenge\/src\/com\/oracle\/svm\/core\/genscavenge\/remset\/NoRememberedSet.java"
+    },
+    {
+        "type": "Rename Method",
+        "commit": "f730ca330b8bea1dbfb2992921b5db9e17e8dcba",
+        "oldname": "getObjectStartOffset",
+        "newname": "getOffsetForObjectInUnalignedChunk",
+        "typeOfIdentifier": "MethodName",
+        "line": 106,
+        "files": "substratevm\/src\/com.oracle.svm.core.genscavenge\/src\/com\/oracle\/svm\/core\/genscavenge\/remset\/CardTableBasedRememberedSet.java"
+    },
+    {
+        "type": "Rename Attribute",
+        "commit": "733b4eb36af952cfdf1225acb89e1663ffdb4162",
+        "oldname": "name",
+        "newname": "type",
+        "typeOfIdentifier": "FieldName",
+        "line": 51,
+        "files": "substratevm\/src\/com.oracle.svm.interpreter.metadata\/src\/com\/oracle\/svm\/interpreter\/metadata\/InterpreterResolvedJavaType.java"
+    },
+    {
+        "type": "Rename Parameter",
+        "commit": "0840d5d3fdee17da0ca65315c717edced1f9c588",
+        "oldname": "unresolvedTypeConstructor",
+        "newname": "createUnresolved",
+        "typeOfIdentifier": "ParameterName",
+        "line": 112,
+        "files": "espresso\/src\/com.oracle.truffle.espresso\/src\/com\/oracle\/truffle\/espresso\/substitutions\/jvmci\/Target_com_oracle_truffle_espresso_jvmci_EspressoJVMCIRuntime.java"
+    },
+    {
+        "type": "Rename Class",
+        "commit": "5bcb77260a707bbbca6aedaf34521d32bfdce9e9",
+        "oldname": "JDKInitializedAtBuildTime",
+        "newname": "SecurityProvidersInitializedAtBuildTime",
+        "typeOfIdentifier": "ClassName",
+        "line": 31,
+        "files": "substratevm\/src\/com.oracle.svm.core\/src\/com\/oracle\/svm\/core\/jdk\/JDKInitializedAtBuildTime.java"
+    },
+    {
+        "type": "Rename Attribute",
+        "commit": "af5682251c04cb2804f2031a834472a98e43548a",
+        "oldname": "entries",
+        "newname": "cachedEntries",
+        "typeOfIdentifier": "FieldName",
+        "line": 52,
+        "files": "substratevm\/src\/com.oracle.svm.interpreter.metadata\/src\/com\/oracle\/svm\/interpreter\/metadata\/InterpreterConstantPool.java"
+    },
+    {
+        "type": "Rename Attribute",
+        "commit": "4ed66aab3b87ec7b63bbfc5581590ea5c1d7f31f",
+        "oldname": "referenceMapIndexOffset",
+        "newname": "compressedReferenceMapOffsetOffset",
+        "typeOfIdentifier": "FieldName",
+        "line": 84,
+        "files": "substratevm\/src\/com.oracle.svm.core\/src\/com\/oracle\/svm\/core\/graal\/meta\/DynamicHubOffsets.java"
+    },
+    {
+        "type": "Rename Attribute",
+        "commit": "037ad7bfef2848265bd54f4fdc7a6a410d94e258",
+        "oldname": "interfaceTypeID",
+        "newname": "interfaceID",
+        "typeOfIdentifier": "FieldName",
+        "line": 46,
+        "files": "substratevm\/src\/com.oracle.svm.core\/src\/com\/oracle\/svm\/core\/graal\/nodes\/LoadMethodByIndexNode.java"
+    },
+    {
+        "type": "Rename Attribute",
+        "commit": "037ad7bfef2848265bd54f4fdc7a6a410d94e258",
+        "oldname": "numInterfaceTypes",
+        "newname": "numIterableInterfaceTypes",
+        "typeOfIdentifier": "FieldName",
+        "line": 283,
+        "files": "substratevm\/src\/com.oracle.svm.core\/src\/com\/oracle\/svm\/core\/hub\/DynamicHub.java"
+    }
+]
