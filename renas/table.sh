@@ -34,11 +34,11 @@ fi
 echo "${archive} Run ParseCode"
 repo="${archive}/repo"
 # parse code
-java -jar "${JARPARSEPATH}/${PARSECODE}" "${archive}"
+java -Xms48g -jar "${JARPARSEPATH}/${PARSECODE}" "${archive}"
 
 # semantic expand
 cd "${JARSEMANTICPATH}"
-java -jar "${SEMANTICEXPAND}" "/work/${archive}"
+java -Xms48g -jar "${SEMANTICEXPAND}" "/work/${archive}"
 cd ../../..
 # normalize
 python3 -m renas.relationship.normalize "${archive}"
