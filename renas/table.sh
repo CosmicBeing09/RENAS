@@ -34,11 +34,22 @@ fi
 echo "${archive} Run ParseCode"
 repo="${archive}/repo"
 # parse code
-java -Xms12g -jar "${JARPARSEPATH}/${PARSECODE}" "${archive}" 2>/dev/null
+echo "Running ParseCode JAR with arguments: ${archive}"
+if ! java -Xms12g -jar "${JARPARSEPATH}/${PARSECODE}" "${archive}"; then
+    echo "ERROR: ParseCode JAR failed for ${archive}" >&2
+    exit 1
+fi
+echo "ParseCode JAR completed successfully for ${archive}"
 
 # semantic expand
+echo "Running SemanticExpand JAR with arguments: /work/${archive}"
 cd "${JARSEMANTICPATH}"
-java -Xms12g -jar "${SEMANTICEXPAND}" "/work/${archive}"
+if ! java -Xms12g -jar "${SEMANTICEXPAND}" "/work/${archive}"; then
+    echo "ERROR: SemanticExpand JAR failed for /work/${archive}" >&2
+    cd ../../..
+    exit 1
+fi
+echo "SemanticExpand JAR completed successfully for /work/${archive}"
 cd ../../..
 # normalize
 python3 -m renas.relationship.normalize "${archive}"
