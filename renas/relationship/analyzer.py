@@ -71,43 +71,14 @@ def git_archive(root, directory, sha1):
 
 def do_table(directory: pathlib.Path, sha1: str):
     archiveDir = directory.joinpath(sha1)
-    LOGGER.info(f"Running table.sh for archive: {archiveDir}")
-    
     try:
         p1 = subprocess.run(
-            f"sh renas/table.sh {archiveDir}", 
-            shell=True, 
-            stdout=subprocess.PIPE, 
-            stderr=subprocess.PIPE,
-            text=True
+            f"sh renas/table.sh {archiveDir}", shell=True, stdout=subprocess.PIPE
         )
-        
-        if p1.stdout:
-            LOGGER.info(f"table.sh stdout: {p1.stdout}")
-        if p1.stderr:
-            LOGGER.error(f"table.sh stderr: {p1.stderr}")
-            
-        if p1.returncode != 0:
-            LOGGER.error(f"table.sh failed with return code {p1.returncode} for {archiveDir}")
-            if p1.stderr:
-                LOGGER.error(f"Error details: {p1.stderr}")
-            LOGGER.info(f"Removing failed archive directory: {archiveDir}")
+        if p1.returncode == 1:
             shutil.rmtree(archiveDir)
-            raise Exception(f"table.sh failed for {archiveDir}")
-        else:
-            LOGGER.info(f"table.sh completed successfully for {archiveDir}")
-            
     except subprocess.CalledProcessError as cpe:
-        LOGGER.error(f"CalledProcessError in do_table for {archiveDir}: {cpe}")
-        LOGGER.error(f"Return code: {cpe.returncode}")
-        LOGGER.error(f"Output: {cpe.output}")
-        LOGGER.error(f"Stderr: {cpe.stderr}")
-        traceback.print_exc()
-        raise
-    except Exception as e:
-        LOGGER.error(f"Unexpected error in do_table for {archiveDir}: {e}")
-        LOGGER.exception("Full traceback:")
-        raise
+        traceback.print_exc(cpe)
 
 
 def git_archive_wrapper(arg):
@@ -117,15 +88,8 @@ def git_archive_wrapper(arg):
 def main(root: pathlib.Path, rename_data: pd.DataFrame, threshold: int):
     set_logger(INFO)
     try:
-        LOGGER.info(f"Starting analysis for {root}")
-        LOGGER.info(f"Input rename_data has {len(rename_data)} records")
-        
         rename_data = filter_data(rename_data, threshold)
-        LOGGER.info(f"After filtering: {len(rename_data)} records remain")
-        
         commits = rename_data["commit"].unique()
-        LOGGER.info(f"Processing {len(commits)} unique commits")
-        
         out_dir = root.joinpath("archives")
         git_archive_args = [(root, out_dir, c) for c in commits]
 
@@ -134,28 +98,19 @@ def main(root: pathlib.Path, rename_data: pd.DataFrame, threshold: int):
         for i in git_archive_args:
             count += 1
             LOGGER.info(f"{count} / {len(git_archive_args)}")
-            try:
-                git_archive_wrapper(i)
-                do_table(i[1], i[2])
-            except Exception as e:
-                LOGGER.error(f"Error processing archive {i[2]}: {e}")
-                LOGGER.exception("Full traceback:")
-                continue
+            git_archive_wrapper(i)
+            do_table(i[1], i[2])
 
-        goldset_path = root.joinpath("goldset.json.gz")
-        LOGGER.info(f"Saving goldset to {goldset_path}")
         rename_data.to_json(
-            goldset_path,
+            root.joinpath("goldset.json.gz"),
             orient="records",
             indent=4,
             compression="gzip",
         )
-        LOGGER.info(f"Successfully saved goldset with {len(rename_data)} records")
 
-    except Exception as e:
-        LOGGER.error(f"Critical error in analyzer main: {e}")
-        LOGGER.exception("Full traceback:")
-        raise  # Re-raise the exception instead of silently passing
+    except Exception:
+        LOGGER.exception("")
+        pass
 
 
 def read_rename_file(root: pathlib.Path):
